@@ -35,7 +35,7 @@ class Star:
     R = 5
     """Радиус звезды"""
 
-    color = "red"
+    color = "red"#(255, 0, 0)
     """Цвет звезды"""
 
     image = None
@@ -75,7 +75,7 @@ class Planet:
     R = 5
     """Радиус планеты"""
 
-    color = "green"
+    color = "green"#(0, 255, 0)
     """Цвет планеты"""
 
     image = None
