@@ -80,7 +80,14 @@ def open_file_dialog():
         space.delete(obj.image)  # удаление старых изображений планет
     in_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
     space_objects = read_space_objects_data_from_file(in_filename)
-    max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
+    gravitational_constant = 6.67408E-11
+    # maximum of energy for sattellite
+    E_max = (-gravitational_constant * space_objects[0].m * space_objects[1].m / space_objects[1].x) + 0.5 * (
+                space_objects[1].m * (space_objects[1].Vy ** 2))
+    # semi-major axis for ellipse of trajectory of satellite
+    a = - gravitational_constant * space_objects[0].m * space_objects[1].m / E_max
+    print(in_filename)
+    max_distance = max([max(abs(obj.x), abs(obj.y), a - obj.x) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
     for obj in space_objects:
@@ -114,7 +121,8 @@ def main():
 
     print('Modelling started!')
     physical_time = 0
-
+    f = open('stats.txt', 'w')
+    f.close()
     root = tkinter.Tk()
     # космическое пространство отображается на холсте типа Canvas
     space = tkinter.Canvas(root, width=window_width, height=window_height, bg="black")
@@ -147,6 +155,7 @@ def main():
 
     root.mainloop()
     print('Modelling finished!')
+
 
 if __name__ == "__main__":
     main()
