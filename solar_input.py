@@ -15,7 +15,7 @@ def read_space_objects_data_from_file(input_filename):
     with open(input_filename) as input_file:
         for line in input_file:
             if len(line.strip()) == 0 or line[0] == '#':
-                continue  # пустые строки и строки-комментарии пропускаем
+                continue   # Skip empty lines and comment lines
             object_type = line.split()[0].lower()
             if object_type == "star":
                 star = Star()
@@ -50,6 +50,7 @@ def parse_star_parameters(line, star):
     star.Vx = float(line[6])
     star.Vy = float(line[7])
 
+
 def parse_planet_parameters(line, planet):
     """Считывает данные о планете из строки.
     Предполагается такая строка:
@@ -69,7 +70,7 @@ def parse_planet_parameters(line, planet):
     planet.y = float(line[5])
     planet.Vx = float(line[6])
     planet.Vy = float(line[7])
-    
+
 
 def write_space_objects_data_to_file(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
@@ -83,7 +84,7 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
             print("%s %i %s %s %s %s %s %s" % \
-                  (obj.type, obj.R, obj.color, obj.m, obj.x, obj.y, obj.Vx, obj.Vy), file = out_file)
+                  (obj.type, obj.R, obj.color, obj.m, obj.x, obj.y, obj.Vx, obj.Vy), file=out_file)
 
 
 if __name__ == "__main__":

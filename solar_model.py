@@ -20,15 +20,16 @@ def calculate_force(body, space_objects):
         body.Fy += -gravitational_constant * body.m * obj.m / r ** 3 * (body.y - obj.y)
 
 
-def move_space_object(body, dt):
+def move_space_object(body, dt, physical_time):
     """Перемещает тело в соответствии с действующей на него силой.
     Параметры:
     **body** — тело, которое нужно переместить.
     """
+    
     with open('stats.txt', 'a') as out_file:
         obj = body
-        print("%s %i %s %s %s %s %s %s" % \
-                  (body.type, body.R, body.color, body.m, body.x, body.y, body.Vx, body.Vy), file = out_file)
+        print("%s %s %i %s %s %s %s %s %s" % \
+                  (physical_time, body.type, body.R, body.color, body.m, body.x, body.y, body.Vx, body.Vy), file = out_file)
     ax = body.Fx / body.m
     body.x += body.Vx * dt  
     body.Vx += ax * dt
@@ -38,7 +39,7 @@ def move_space_object(body, dt):
     body.Vy += ay * dt
    
 
-def recalculate_space_objects_positions(space_objects, dt):
+def recalculate_space_objects_positions(space_objects, dt, time):
     """Пересчитывает координаты объектов.
     Параметры:
     **space_objects** — список объектов, для которых нужно пересчитать координаты.
@@ -48,7 +49,7 @@ def recalculate_space_objects_positions(space_objects, dt):
     for body in space_objects:
         calculate_force(body, space_objects)
     for body in space_objects:
-        move_space_object(body, dt)
+        move_space_object(body, dt, time)
 
 
 if __name__ == "__main__":
